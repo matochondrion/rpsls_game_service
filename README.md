@@ -29,3 +29,29 @@ bundle install
 
 If installing on remote server, make sure port the default port, 4567 is open.
 (winner_server will require port 4568 to be open by default).
+
+## Credits
+
+### Gem `sinatra-contrib`:
+
+Includes a number of useful itilies like
+
+### Gem `thin`:
+
+Using the `thin` webserver instead of default `webrick` because it's more
+performant and has more features, as recmmended by Sinatra
+documentation.
+
+### Gem `erubis`:
+
+View templating engine.
+
+### Gem: `httprb`:
+
+Using `httprb` instead of Ruby's `Net::HTTP` because `httprb` is simpler.
+
+Read more here:
+http://twin.github.io/httprb-is-great/
+
+https://github.com/httprb/http
+
