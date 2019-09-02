@@ -51,7 +51,7 @@ def valid_choice?(choice_id)
                  .post(RPSLS_WINNER_SERVER + '/is_valid_choice',
                        json: choice_to_check)
   is_valid = JSON.parse(response.body)['is_valid']
-  is_valid == 'true'
+  # is_valid == 'true'
 end
 
 def retrieve_choices
