@@ -50,8 +50,8 @@ def valid_choice?(choice_id)
   response = HTTP.headers(accept: 'application/json').follow(max_hops: 3)
                  .post(RPSLS_WINNER_SERVER + '/is_valid_choice',
                        json: choice_to_check)
-  is_valid = JSON.parse(response.body)['is_valid']
-  # is_valid == 'true'
+
+  JSON.parse(response.body)['is_valid']
 end
 
 def retrieve_choices
