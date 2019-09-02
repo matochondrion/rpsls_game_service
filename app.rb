@@ -4,6 +4,8 @@ require "sinatra/json"
 require 'erubis'
 require 'http'
 
+# TODO: add api namespace
+
 RPSLS_WINNER_SERVER = 'http://54.70.36.146:4568'.freeze
 
 configure do
@@ -42,8 +44,14 @@ def retrieve_winner(game_data)
   response.body.to_s
 end
 
-def valid_choice? choice
-  true if choice
+def valid_choice?(choice_id)
+  choice_to_check = { choice_id: choice_id }
+
+  response = HTTP.headers(accept: 'application/json').follow(max_hops: 3)
+                 .post(RPSLS_WINNER_SERVER + '/is_valid_choice',
+                       json: choice_to_check)
+  is_valid = JSON.parse(response.body)['is_valid']
+  is_valid == 'true'
 end
 
 def retrieve_choices
@@ -71,15 +79,20 @@ end
 
 post '/play' do
   content_type :json
+  request.body.rewind # in case someone already read it
+  data = JSON.parse request.body.read
+
+  player_choice = data['player'].to_i
+
+  return 'Invalid Choice' unless valid_choice? player_choice
 
   game_data = {
-    results: 'tbd',
-    player: 2,
+    result: 'tbd',
+    player: player_choice,
     computer: computer_choice_id
   }
 
-  winner = get_winner game_data[:player], game_data[:computer]
-
-  game_data['results'] = winner
+  winner = retrieve_winner game_data
+  game_data['result'] = winner
   game_data.to_json
 end
