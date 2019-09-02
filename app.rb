@@ -4,39 +4,7 @@ require "sinatra/json"
 require 'erubis'
 require 'http'
 
-RPSLS_WINNER_SERVER = 'http://http://54.70.36.146:4568'
-CHOICES = [
-  {
-    'choice': {
-      'id': 1,
-      'name': 'rock'
-    }
-  },
-  {
-    'choice': {
-      'id': 2,
-      'name': 'paper'
-    }
-  },
-  {
-    'choice': {
-      'id': 3,
-      'name': 'scissors'
-    }
-  },
-  {
-    'choice': {
-      'id': 4,
-      'name': 'lizard'
-    }
-  },
-  {
-    'choice': {
-      'id': 5,
-      'name': 'spock'
-    }
-  }
-]
+RPSLS_WINNER_SERVER = 'http://54.70.36.146:4568'.freeze
 
 configure do
   set :bind, '0.0.0.0'
@@ -44,11 +12,6 @@ configure do
 end
 
 helpers do
-end
-
-# don't need?
-def play_against_computer(player_choice)
-  get_winner player_choice, computer_choice
 end
 
 def computer_choice_id
@@ -87,7 +50,7 @@ end
 
 get '/choices' do
   content_type :json
-  CHOICES.to_json
+  retrieve_choices.to_json
 end
 
 get '/choice' do
