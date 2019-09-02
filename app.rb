@@ -30,18 +30,26 @@ def retrieve_random_number
   # TODO: build in some error checking
   # https://github.com/httprb/http/wiki/Redirects
   #
-  response = HTTP.accept(:json).follow(max_hops: 3)
+  response = HTTP.headers(accept: 'application/json').follow(max_hops: 3)
                  .get('http://codechallenge.boohma.com/random')
   json = JSON.parse response.body
   json['random_number']
 end
 
-def get_winner(player_choice_id, computer_choice_id)
-  #
-  response = HTTP.accept(:json).follow(max_hops: 3)
-                 .get(RPSLS_WINNER_SERVER)
-  computer_choice_id
-  'win'
+def retrieve_winner(game_data)
+  response = HTTP.headers(accept: 'application/json').follow(max_hops: 3)
+                 .post(RPSLS_WINNER_SERVER, json: game_data)
+  response.body.to_s
+end
+
+def valid_choice? choice
+  true if choice
+end
+
+def retrieve_choices
+  response = HTTP.headers(accept: 'application/json').follow(max_hops: 3)
+                 .get(RPSLS_WINNER_SERVER + '/choices')
+  JSON.parse response.body
 end
 
 get '/' do
