@@ -30,6 +30,69 @@ bundle install
 If installing on remote server, make sure port the default port, 4567 is open.
 (winner_server will require port 4568 to be open by default).
 
+## API
+
+### `GET: /choice`
+
+Get a randomly generated choice (for clients that don’t trust the server)
+
+### `GET: /choices`
+
+Get all the choices that are usable for the frontend. Returns json array of
+possible choices. Note, the choice data origiantes from the _Winner Service_
+microservice.
+
+Example JSON Response body:
+
+```
+[
+  {
+    "choice": {
+      "id": 1,
+      "name": "rock"
+    }
+  },
+  {
+    "choice": {
+      "id": 2,
+      "name": "paper"
+    }
+  },
+  {
+    "choice": {
+      "id": 3,
+      "name": "scissors"
+    }
+  },
+  {
+    "choice": {
+      "id": 4,
+      "name": "lizard"
+    }
+  },
+  {
+    "choice": {
+      "id": 5,
+      "name": "spock"
+    }
+  }
+]
+```
+
+### `POST: /play`
+
+Play a round (for servers that don’t trust the client)
+
+Example JSON Response body:
+
+```
+{
+  "results": string [12] (win, lose, tie),
+  "player": choice_id,
+  "computer":  choice_id
+}
+```
+
 ## Credits
 
 ### Gem `sinatra-contrib`:
@@ -54,4 +117,3 @@ Read more here:
 http://twin.github.io/httprb-is-great/
 
 https://github.com/httprb/http
-
