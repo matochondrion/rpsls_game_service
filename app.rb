@@ -65,6 +65,11 @@ def retrieve_choices
   JSON.parse response.body
 end
 
+def random_choice
+  choices = retrieve_choices
+  choices[rand choices.length]['choice']
+end
+
 get '/' do
   erb :index
 end
@@ -77,10 +82,8 @@ namespace '/api' do
 
   get '/choice' do
     content_type :json
-    {
-      "id": 2,
-      "name": 'paper'
-    }.to_json
+
+    random_choice.to_json
   end
 
   post '/play' do
