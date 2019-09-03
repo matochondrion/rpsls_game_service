@@ -41,10 +41,12 @@ def retrieve_random_number
   json['random_number']
 end
 
-def retrieve_winner(game_data)
+def retrieve_winner(players_data)
   response = HTTP.headers(accept: 'application/json').follow(max_hops: 3)
-                 .post(RPSLS_WINNER_SERVER + '/compute_winner', json: game_data)
-  response.body.to_s
+                 .post(RPSLS_WINNER_SERVER + '/compute_winner',
+                       json: players_data)
+
+  response.body
 end
 
 def valid_choice?(choice_id)
@@ -60,10 +62,6 @@ end
 def retrieve_choices
   response = HTTP.headers(accept: 'application/json').follow(max_hops: 3)
                  .get(RPSLS_WINNER_SERVER + '/choices')
-  puts '=>'
-  puts '=>'
-  puts '=>'
-  puts JSON.parse response.body
   JSON.parse response.body
 end
 
@@ -90,18 +88,15 @@ namespace '/api' do
     request.body.rewind # in case someone already read it
     data = JSON.parse request.body.read
 
-    player_choice = data['player'].to_i
+    player_choice_id = data['player'].to_i
 
-    return 'Invalid Choice' unless valid_choice? player_choice
+    return 'Invalid Choice' unless valid_choice? player_choice_id
 
-    game_data = {
-      result: 'tbd',
-      player: player_choice,
-      computer: computer_choice_id
-    }
+    players_data = [{ name: 'player', choice_id: player_choice_id },
+                    { name: 'computer', choice_id: computer_choice_id }]
 
-    winner = retrieve_winner game_data
-    game_data['result'] = winner
-    game_data.to_json
+    players_data = retrieve_winner players_data
+
+    players_data.to_json
   end
 end
