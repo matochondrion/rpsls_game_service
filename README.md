@@ -126,3 +126,9 @@ Read more here:
 http://twin.github.io/httprb-is-great/
 
 https://github.com/httprb/http
+
+## ToDo
+
+- Try a different structure where the React app is completely separate from the
+  Game_Service, and use a proxy on the backend to forward api calls to the
+  Game_Game_Service.
