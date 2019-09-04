@@ -14,6 +14,8 @@ RPSLS_WINNER_SERVER = 'http://54.70.36.146:4568/api'.freeze
 configure do
   set :bind, '0.0.0.0'
   set :port, '4567'
+  set :public_folder, Proc.new { File.join(root, "lib/app/public") }
+  set :views, Proc.new { File.join(root, "lib/app/views") }
 end
 
 helpers do
@@ -71,7 +73,8 @@ def random_choice
 end
 
 get '/' do
-  erb :index
+  # erb :index
+  File.read(File.join('lib/app/views', 'index.html'))
 end
 
 namespace '/api' do
