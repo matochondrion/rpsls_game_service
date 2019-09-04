@@ -2,5 +2,6 @@ import React from "react";
 import { render } from "react-dom";
 
 import App from "./components/App";
+import Game from "./components/Game";
 
-render(<App name="World" />, document.getElementById("root"));
+render(<Game name="World" />, document.getElementById("root"));
