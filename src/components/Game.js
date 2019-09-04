@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 import "../assets/styles/App.scss";
 
@@ -35,16 +36,33 @@ class Game extends React.Component {
         {
           choice: {
             id: 5,
-            name: "nerd"
+            name: "neeeeerds, omg"
           }
         }
-      ]
+      ],
+      message: "Messages go here."
     };
   }
 
+  componentDidMount() {
+    // TODO: use a config variable instead of hardcoding.
+    axios
+      .get("/api/choices")
+      .then(res => {
+        const choices = res.data;
+        this.setState({ choices });
+      })
+      .catch(error => {
+        this.setState({ message: error.message });
+        alert(error.message);
+      });
+  }
+
+  // <Message messsage={String(this.state.choices)} />
   render() {
     return (
       <div className="game">
+        <Message message={this.state.message} />
         <h2>Player, make a choice to play against the Computer</h2>
         <div>{/* status */}</div>
         <div>Choose for me</div>
@@ -78,7 +96,8 @@ class Choices extends React.Component {
 
 class Choice extends React.Component {
   doSomething(label) {
-    this.setState({ choice: label });
+    // this.setState({ choice: label });
+    alert(label);
   }
 
   render() {
@@ -88,10 +107,15 @@ class Choice extends React.Component {
   }
 }
 
-// App.propTypes = {
-//   name: PropTypes.string,
-//   choice: PropTypes.object,
-//   choices: PropTypes.object
-// };
+class Message extends React.Component {
+  render() {
+    return (
+      <div>
+        <h3>message:</h3>
+        <div>{this.props.message}</div>
+      </div>
+    );
+  }
+}
 
 export default Game;
