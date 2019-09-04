@@ -132,3 +132,4 @@ https://github.com/httprb/http
 - Try a different structure where the React app is completely separate from the
   Game_Service, and use a proxy on the backend to forward api calls to the
   Game_Game_Service.
+- add config setting for webpack.config.js to set the api proxy server and port
