@@ -95,6 +95,15 @@ Example JSON Response body:
 
 ## Credits
 
+### Github Repo: React Sinatra Example
+
+[https://github.com/alanbsmith/react-sinatra-example](https://github.com/alanbsmith/react-sinatra-example)
+
+Starter React setup for implimenting a React Project with Sinatra. I merged the
+relative files into the Sinatra app, and made Sinatra config changes in the
+`app.rb` file in order to serev static files fromt the React project rather
+than the default Sinatra locations.
+
 ### Gem `sinatra-contrib`:
 
 Includes a number of useful itilies like
