@@ -2,9 +2,11 @@
 
 ## Overview
 
-The `game_service` has two roles, serving a React Single Page Application,
-and hosting several API endpoints. The endpoints deliver necessary data to the
-SPA, and accept data from it.
+The `game_service` has two roles, serving a React Single Page Application, for
+the ["Rock Paper Scissors Lizard
+Spock"](http://www.samkass.com/theories/RPSSL.html) game and hosting several
+API endpoints. The endpoints deliver necessary data to the SPA, and accept data
+from it.
 
 Furthermore, it retrieves data from, and sends data to, the `winner_service`.
 This way the `winner_service` can scale independently of the `game_service` and
