@@ -11,6 +11,7 @@ class Game extends React.Component {
     this.state = {
       choices: [],
       choice: "",
+      result: [{}, {}],
       message: "Messages go here."
     };
   }
@@ -62,7 +63,7 @@ class Game extends React.Component {
       .then(res => {
         const winner = res.data;
         let newState = Object.assign({}, this.state);
-        // newState.choices = retrievedChoices;
+        newState.result = winner;
         newState.message = String(winner);
 
         this.setState(newState);
@@ -91,6 +92,13 @@ class Game extends React.Component {
         <Choices
           choices={this.state.choices}
           onClick={index => this.handleClick(index)}
+        />
+
+        <Result
+          playerChoice={this.state.result[0].choice}
+          playerResult={this.state.result[0].result}
+          computerChoice={this.state.result[1].choice}
+          computerResult={this.state.result[1].result}
         />
       </div>
     );
@@ -135,6 +143,31 @@ class Choice extends React.Component {
           {this.props.name}
         </a>
       </li>
+    );
+  }
+}
+
+class Result extends React.Component {
+  render() {
+    return (
+      <div>
+        <h3>Result:</h3>
+
+        <table>
+          <tr>
+            <th scope="col">Player Choice</th>
+            <th scope="col">Player result</th>
+            <th scope="col">Computer Choice</th>
+            <th scope="col">Computer result</th>
+          </tr>
+          <tr>
+            <td scope="col">{this.props.playerChoice}</td>
+            <td scope="col">{this.props.playerResult}</td>
+            <td scope="col">{this.props.computerChoice}</td>
+            <td scope="col">{this.props.computerResult}</td>
+          </tr>
+        </table>
+      </div>
     );
   }
 }
