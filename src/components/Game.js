@@ -8,49 +8,30 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      choices: [
-        {
-          choice: {
-            id: 1,
-            name: "rock"
-          }
-        },
-        {
-          choice: {
-            id: 2,
-            name: "paper"
-          }
-        },
-        {
-          choice: {
-            id: 3,
-            name: "cutters"
-          }
-        },
-        {
-          choice: {
-            id: 4,
-            name: "rabbit"
-          }
-        },
-        {
-          choice: {
-            id: 5,
-            name: "neeeeerds, omg"
-          }
-        }
-      ],
+      choices: [],
+      choice: "",
       message: "Messages go here."
     };
   }
 
+  handleClick(index) {
+    let newState = Object.assign({}, this.state);
+    newState.choice = this.state.choices[index].choice.name;
+    newState.message = this.state.choices[index].choice.name;
+    this.setState(newState);
+
+    // alert(index + ": Game Component. choice: " + this.state.choice);
+  }
   componentDidMount() {
-    // TODO: use a config variable instead of hardcoding.
     axios
       .get("/api/choices")
       .then(res => {
-        const choices = res.data;
-        this.setState({ choices });
+        const retrievedChoices = res.data;
+        let newState = Object.assign({}, this.state);
+        newState.choices = retrievedChoices;
+        newState.message = "choices data retrieved";
+
+        this.setState(newState);
       })
       .catch(error => {
         this.setState({ message: error.message });
@@ -58,7 +39,6 @@ class Game extends React.Component {
       });
   }
 
-  // <Message messsage={String(this.state.choices)} />
   render() {
     return (
       <div className="game">
@@ -67,27 +47,32 @@ class Game extends React.Component {
         <div>{/* status */}</div>
         <div>Choose for me</div>
 
-        <ul className="choice-list">
-          <li>Rock</li>
-          <li>Paper</li>
-          <li>Scissors</li>
-          <li>Lizard</li>
-          <li>Spock</li>
-          <li>{/* TODO */}</li>
-        </ul>
-
-        <Choices choices={this.state.choices} />
+        <Choices
+          choices={this.state.choices}
+          onClick={index => this.handleClick(index)}
+        />
       </div>
     );
   }
 }
 
 class Choices extends React.Component {
+  handleClick(index) {
+    this.props.onClick(index);
+  }
+
   render() {
     const choices = [];
 
-    for (const [index, value] of this.props.choices.entries()) {
-      choices.push(<Choice key={index} label={value.choice.name} />);
+    for (const [index, item] of this.props.choices.entries()) {
+      choices.push(
+        <Choice
+          key={index}
+          index={index}
+          name={item.choice.name}
+          onClick={index => this.handleClick(index)}
+        />
+      );
     }
 
     return <ul className="choice-list">{choices}</ul>;
@@ -95,14 +80,19 @@ class Choices extends React.Component {
 }
 
 class Choice extends React.Component {
-  doSomething(label) {
-    // this.setState({ choice: label });
-    alert(label);
+  handleClick(index) {
+    this.props.onClick(index);
   }
 
   render() {
     return (
-      <li onClick={() => this.doSomething("clicked")}>{this.props.label}</li>
+      <li
+        id={"choice-" + this.props.name}
+        class="choice-container"
+        onClick={() => this.handleClick(this.props.index)}
+      >
+        {this.props.name}
+      </li>
     );
   }
 }
