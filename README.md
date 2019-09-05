@@ -17,12 +17,12 @@ CORS rules and functionality on the servers and in the front-end app.
 
 ### Installation
 
-Ruby Version: 2.6.4
+Ruby Version: 2.6.3
 
 You may want to use the [RVM Ruby Version Manager](https://rvm.io/rvm/install)
 to install Ruby version 2.6.3.
 
-- First, install bundler, if you haven't:
+- First, install bundler if you don't already have it:
 
 ```
 gem install bundler
@@ -49,13 +49,13 @@ bundle install
 npm install
 ```
 
-- Update `winner_server` URLs in the code base to the server its running on. In
-  future updates this will be handled by config settings.
+- Update `winner_server` URLs in the code base to the server `winner_server` is
+  running on. In future updates this will be handled by config settings.
   - In `app.rb` replace the URL at top of the file with the `winner_server`
     URL.
-  - In `webpack.config.js` replace the URL at top of the file with the
-    `winner_server`. Note, this is relivant during production when using the
-    Webpack Dev server running on port `:8080`.
+    - In `webpack.config.js` replace the URL for `proxy` with the
+      `winner_server` URL. Note, this is relivant during production when using
+      the Webpack Dev server running on port `:8080`.
 
 ```ruby
 # app.rb
@@ -65,8 +65,8 @@ RPSLS_WINNER_SERVER = 'http://54.70.36.146:4568/api'.freeze
 ```
 
 ```javascript
-# webpack.config.js
-# ...
+// webpack.config.js
+// ...
 
 devServer: {
   contentBase: "./lib/app/views/",
@@ -83,34 +83,6 @@ devServer: {
 bundle exec ruby app.rb
 ```
 
-## Setup
-
-### Ruby Version: 2.6.4
-
-You may want to use the [RVM Ruby Version Manager](https://rvm.io/rvm/install)
-
-to install Ruby version 2.6.3.
-
-### Installation
-
-First, install bundler, if you haven't:
-
-```
-gem install bundler
-```
-
-Install Sinatra and dependencies:
-
-Note, when using rvm, you may need to ues `rvmsudo` instead of `sudo`
-when running `bundle install`.
-
-```
-bundle install
-```
-
-If installing on remote server, make sure port the default port, 4567 is open.
-(winner_server will require port 4568 to be open by default).
-
 ## API
 
 ### `GET: /choice`
@@ -120,7 +92,7 @@ Retrieve a randomly generated choice (for clients that don't trust the server)
 ### `GET: /choices`
 
 Get all the choices that are usable for the front-end. Returns JSON array of
-possible choices. Note, the choice data originates from the _Winner Service_
+possible choices. Note, the choice data originates from the `winner_service`
 micro-service.
 
 Example JSON Response body:
@@ -228,6 +200,7 @@ https://github.com/httprb/http
 ## ToDo
 
 - Try a different structure where the React app is completely separate from the
-  Game_Service, and use a proxy on the backend to forward api calls to the
+  Game_Service, and use a proxy on the backend to forward API calls to the
   Game_Game_Service.
-- add config setting for webpack.config.js to set the api proxy server and port
+- Add config setting for webpack.config.js to set the api proxy server and port
+- Include type checking for request sent to the API, for security.
