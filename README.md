@@ -167,6 +167,21 @@ Example JSON Response body:
 
 ## Credits
 
+### Random Numbers
+
+Billups' random number endpoint for the computer's random choice any time a
+random number is needed:
+
+```
+GET: http://codechallenge.boohma.com/random
+```
+
+Example Result: application/json
+
+```
+{ "random_number": integer [1-100] }
+```
+
 ### Github Repo: React Sinatra Example
 
 [https://github.com/alanbsmith/react-sinatra-example](https://github.com/alanbsmith/react-sinatra-example)
