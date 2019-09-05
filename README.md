@@ -10,7 +10,7 @@ from it.
 
 Furthermore, it retrieves data from, and sends data to, the `winner_service`.
 This way the `winner_service` can scale independently of the `game_service` and
-different implementations of `game_service` can be developed without
+unique implementations of `game_service` can be developed without
 having to duplicate the game logic. This structure also allows the React
 client app to communicate with services on other domains without setting up
 CORS rules and functionality on the servers and in the front-end app.
@@ -216,8 +216,18 @@ https://github.com/httprb/http
 
 ## ToDo
 
+- Implement a config file or ENV variables to make setting the
+  `winner_service` URL simpler. Currently this setup needs to be done by hand
+  in several places.
+- Implement a test suite for all endpoints and functions.
+- Include type checking for request sent to the API, for security.
+- Refactor code to be cleaner, better DRY implementations, etc.
 - Try a different structure where the React app is completely separate from the
   Game_Service, and use a proxy on the backend to forward API calls to the
   Game_Game_Service.
 - Add config setting for webpack.config.js to set the api proxy server and port
-- Include type checking for request sent to the API, for security.
+- Split the React components into separate files.
+- Implement a test suite for React app
+- Finish implementing the Random Choice feature where the SPA contacts the
+  `game_service` endpoint for a random choice and then plays that random choice.
+- Better styling and design on the front-end.
