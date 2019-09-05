@@ -36,8 +36,8 @@ class Game extends React.Component {
   handleClick(index) {
     let choiceName = this.state.choices[index].choice.name;
 
-    this.updateStateChoice(choiceName);
     this.styleSelectedChoice(choiceName);
+    this.updateStateChoice(choiceName);
     this.playChoice(index);
   }
 
