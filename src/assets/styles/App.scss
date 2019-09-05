@@ -1,3 +1,7 @@
+html {
+  font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
+
+}
 h1 {
   font-family: Helvetica;
   font-weight: 200;
@@ -32,4 +36,33 @@ h2 {
   background-color: green;
 }
 
+.results-container{
+  width: 100%;
+}
+.results-table {
+  margin: 0 auto;
+  border: 1px solid black;
+}
 
+.result-header {
+  text-align: center;
+  padding: 1rem;
+  color: white;
+  background-color: black;
+}
+.result-data {
+  text-align: center;
+  padding: 1rem;
+  height: 50px;
+  background-color: silver;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.bold {
+  font-weight: bold;
+}
+
+.message {
+  display: none;
+}

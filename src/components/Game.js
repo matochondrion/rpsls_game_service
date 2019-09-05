@@ -49,7 +49,7 @@ class Game extends React.Component {
   }
 
   styleSelectedChoice(choiceName) {
-    this.resetStyles(".choice-container", "choice-container");
+    this.resetStyles(".choice-container", "choice-container uppercase bold");
 
     let element = document.querySelector("#choice-" + choiceName);
     element.classList.add("choice-selection");
@@ -81,13 +81,12 @@ class Game extends React.Component {
       element.className = styleName;
     });
   }
+
   render() {
     return (
       <div className="game">
         <Message message={this.state.message} />
         <h2>Player, make a choice to play against the Computer</h2>
-        <div>{/* status */}</div>
-        <div>Choose for me</div>
 
         <Choices
           choices={this.state.choices}
@@ -135,7 +134,10 @@ class Choice extends React.Component {
 
   render() {
     return (
-      <li id={"choice-" + this.props.name} className="choice-container">
+      <li
+        id={"choice-" + this.props.name}
+        className="choice-container uppercase bold"
+      >
         <a
           className="choice-link"
           onClick={() => this.handleClick(this.props.index)}
@@ -151,22 +153,40 @@ class Result extends React.Component {
   render() {
     return (
       <div>
-        <h3>Result:</h3>
+        <h2>Results</h2>
 
-        <table>
-          <tr>
-            <th scope="col">Player Choice</th>
-            <th scope="col">Player result</th>
-            <th scope="col">Computer Choice</th>
-            <th scope="col">Computer result</th>
-          </tr>
-          <tr>
-            <td scope="col">{this.props.playerChoice}</td>
-            <td scope="col">{this.props.playerResult}</td>
-            <td scope="col">{this.props.computerChoice}</td>
-            <td scope="col">{this.props.computerResult}</td>
-          </tr>
-        </table>
+        <div className="results-container">
+          <table className="results-table">
+            <tr>
+              <th scope="col" className="result-header">
+                Player Choice
+              </th>
+              <th scope="col" className="result-header">
+                Player result
+              </th>
+              <th scope="col" className="result-header">
+                Computer Choice
+              </th>
+              <th scope="col" className="result-header">
+                Computer result
+              </th>
+            </tr>
+            <tr>
+              <td scope="col" className="result-data">
+                {this.props.playerChoice}
+              </td>
+              <td scope="col" className="result-data uppercase bold">
+                {this.props.playerResult}
+              </td>
+              <td scope="col" className="result-data">
+                {this.props.computerChoice}
+              </td>
+              <td scope="col" className="result-data uppercase">
+                {this.props.computerResult}
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
     );
   }
@@ -175,7 +195,7 @@ class Result extends React.Component {
 class Message extends React.Component {
   render() {
     return (
-      <div>
+      <div className="message">
         <h3>message:</h3>
         <div>{this.props.message}</div>
       </div>
