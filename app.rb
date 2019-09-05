@@ -48,7 +48,7 @@ def retrieve_winner(players_data)
                  .post(RPSLS_WINNER_SERVER + '/compute_winner',
                        json: players_data)
 
-  response.body
+  JSON.parse response.body
 end
 
 def valid_choice?(choice_id)
