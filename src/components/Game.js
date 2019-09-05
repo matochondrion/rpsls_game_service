@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
+import "normalize.css";
 import "../assets/styles/App.scss";
 
 class Game extends React.Component {
@@ -14,14 +15,6 @@ class Game extends React.Component {
     };
   }
 
-  handleClick(index) {
-    let newState = Object.assign({}, this.state);
-    newState.choice = this.state.choices[index].choice.name;
-    newState.message = this.state.choices[index].choice.name;
-    this.setState(newState);
-
-    // alert(index + ": Game Component. choice: " + this.state.choice);
-  }
   componentDidMount() {
     axios
       .get("/api/choices")
@@ -39,6 +32,54 @@ class Game extends React.Component {
       });
   }
 
+  handleClick(index) {
+    let choiceName = this.state.choices[index].choice.name;
+
+    this.updateStateChoice(choiceName);
+    this.styleSelectedChoice(choiceName);
+    this.playChoice(index);
+  }
+
+  updateStateChoice(choiceName) {
+    let newState = Object.assign({}, this.state);
+    newState.choice = choiceName;
+    newState.message = choiceName;
+    this.setState(newState);
+  }
+
+  styleSelectedChoice(choiceName) {
+    this.resetStyles(".choice-container", "choice-container");
+
+    let element = document.querySelector("#choice-" + choiceName);
+    element.classList.add("choice-selection");
+  }
+
+  playChoice(index) {
+    const playerChoiceId = this.state.choices[index].choice.id;
+
+    axios
+      .post("/api/play", { player: playerChoiceId })
+      .then(res => {
+        const winner = res.data;
+        let newState = Object.assign({}, this.state);
+        // newState.choices = retrievedChoices;
+        newState.message = String(winner);
+
+        this.setState(newState);
+      })
+      .catch(error => {
+        this.setState({ message: error.message });
+        alert(error.message);
+      });
+  }
+
+  resetStyles(selector, styleName) {
+    const elements = document.querySelectorAll(selector);
+
+    elements.forEach(element => {
+      element.className = styleName;
+    });
+  }
   render() {
     return (
       <div className="game">
@@ -86,12 +127,13 @@ class Choice extends React.Component {
 
   render() {
     return (
-      <li
-        id={"choice-" + this.props.name}
-        class="choice-container"
-        onClick={() => this.handleClick(this.props.index)}
-      >
-        {this.props.name}
+      <li id={"choice-" + this.props.name} className="choice-container">
+        <a
+          className="choice-link"
+          onClick={() => this.handleClick(this.props.index)}
+        >
+          {this.props.name}
+        </a>
       </li>
     );
   }
