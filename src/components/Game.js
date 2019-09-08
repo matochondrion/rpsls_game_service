@@ -94,10 +94,10 @@ class Game extends React.Component {
         />
 
         <Result
-          playerChoice={this.state.result[0].choice}
-          playerResult={this.state.result[0].result}
           computerChoice={this.state.result[1].choice}
           computerResult={this.state.result[1].result}
+          playerChoice={this.state.result[0].choice}
+          playerResult={this.state.result[0].result}
         />
       </div>
     );
@@ -135,8 +135,8 @@ class Choice extends React.Component {
   render() {
     return (
       <li
-        id={"choice-" + this.props.name}
         className="choice-container uppercase bold"
+        id={"choice-" + this.props.name}
       >
         <a
           className="choice-link"

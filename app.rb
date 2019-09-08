@@ -4,8 +4,10 @@ require "sinatra/reloader" if development?
 require "sinatra/json"
 require 'erubis'
 require 'http'
+require './env' if File.exists?('env.rb')
 
-RPSLS_WINNER_SERVER = 'http://54.70.36.146:4568/api'.freeze
+# RPSLS_WINNER_SERVER = 'http://54.70.36.146:4568/api'.freeze
+RPSLS_WINNER_SERVER = ENV['winner_service']
 
 # TODO: add config for
 #       - URLs
